@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g
 # Lista de todos os arquivos objeto necessários
-OBJS = main.o 
+OBJS = main.o io.o
 
 # Nome do executável final
 TARGET = ish
