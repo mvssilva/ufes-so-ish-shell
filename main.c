@@ -22,8 +22,6 @@ int main (){
     tcsetattr(STDIN_FILENO, TCSANOW, &t); 
 
     // Tratamento do SIGINT (Ctrl c)
-    // utilizidado dessa funçao intermediária pra ser possível
-    // nao deixar o tratamento na main e ainda assim enviar o ponteiro principal 
     signal(SIGINT, signal_wrapper);
     IshState * lasy_shell = construct();
     lasy_ptr = lasy_shell;

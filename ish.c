@@ -53,8 +53,17 @@ void break_line(char *line, Command *cmd) {
 
 
 void read_line(IshState * lasy){
+
+    // limpando o conteudo lido quando o buffer está cheio
+    if (lasy->count >= MAX_BUFFER) {
+        int ch;
+        while ((ch = getchar()) != '\n' && ch != EOF); 
+        return; 
+    }
+
     char *line_buffer = NULL; 
     size_t size = 0;
+    
     CommandLine c = lasy->buffer[lasy->count];
     
     // leitura da linha
@@ -93,10 +102,6 @@ void read_line(IshState * lasy){
         break_line(line_buffer, c.cmd1);
     }
 
-    // salva no buffer geral
-    // if(lasy->count == MAX_BUFFER)
-    //     _discard_line(c);
-
     lasy->buffer[lasy->count] = c;
     lasy->count++;
 }
@@ -131,16 +136,11 @@ void delete_buffer(IshState * lasy)
 {   
     for(int i = 5; i > 0; i--){
         if(lasy->buffer[i-1].has_pipe == 1){
-            // free(lasy->buffer[i-1].cmd1->args);
             free(lasy->buffer[i-1].cmd1);
-
-            // free(lasy->buffer[i-1].cmd2->args);
             free(lasy->buffer[i-1].cmd2);
         }
         else{
-            // free(lasy->buffer[i-1].cmd1->args);
             free(lasy->buffer[i-1].cmd1);
         }
     }
-    free(lasy);
 }
